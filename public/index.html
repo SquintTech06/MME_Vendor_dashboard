@@ -4,40 +4,173 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    <meta name="theme-color" content="#2563eb" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Make My Event - Your premier destination for wedding venues, catering, decoration, and event planning services. Find the perfect vendors for your special day." />
+    <meta name="keywords" content="wedding venue, event planning, catering, decoration, wedding services, event management, banquet halls" />
+    <meta name="author" content="Make My Event" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Make My Event - Premier Event Planning Platform" />
+    <meta property="og:description" content="Find the perfect venues, caterers, decorators and photographers for your special events. Trusted by thousands of happy customers." />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+    <meta property="og:url" content="https://makemyevent.com" />
+    <meta property="og:site_name" content="Make My Event" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Make My Event - Premier Event Planning Platform" />
+    <meta property="twitter:description" content="Find the perfect venues, caterers, decorators and photographers for your special events." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png" />
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    
+    <!-- Font Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Premium Font Combination: Manrope + Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Make My Event",
+      "description": "Premier event planning platform connecting customers with top-rated venues, caterers, decorators, and photographers",
+      "url": "https://makemyevent.com",
+      "logo": "https://makemyevent.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-XXXXXXXXXX",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://facebook.com/makemyevent",
+        "https://instagram.com/makemyevent",
+        "https://twitter.com/makemyevent"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Visakhapatnam",
+        "addressRegion": "Andhra Pradesh",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
+    
+    <!-- CSS Custom Properties for Brand Colors -->
+    <style>
+      :root {
+        /* Brand Colors */
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --primary-light: #3b82f6;
+        --secondary: #7c3aed;
+        --accent: #ea580c;
+        
+        /* Text Colors */
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+        
+        /* Background Colors */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f9fafb;
+        --bg-tertiary: #f3f4f6;
+        
+        /* Typography */
+        --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        
+        /* Shadows */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        
+        /* Border Radius */
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+      }
+      
+      /* Font Loading Optimization */
+      body {
+        font-family: var(--font-body);
+        font-display: swap;
+      }
+      
+      /* Prevent font flash */
+      .font-display-swap {
+        font-display: swap;
+      }
+      
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Remove focus outline for mouse users, keep for keyboard users */
+      body:not(.user-is-tabbing) button:focus,
+      body:not(.user-is-tabbing) input:focus,
+      body:not(.user-is-tabbing) select:focus,
+      body:not(.user-is-tabbing) textarea:focus {
+        outline: none;
+      }
+    </style>
+    
+    <!-- Performance & Analytics -->
+    <script>
+      // Add accessibility class for keyboard navigation
+      function handleFirstTab(e) {
+        if (e.keyCode === 9) {
+          document.body.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    </script>
+    
+    <title>Make My Event - Premier Event Planning Platform</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>You need to enable JavaScript to use Make My Event platform.</p>
+        <p>Please enable JavaScript in your browser settings and refresh the page.</p>
+      </div>
+    </noscript>
+    
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    
+    <!-- Preload Critical Resources -->
+    <script>
+      // Preload critical images
+      const criticalImages = [
+        '%PUBLIC_URL%/hero-image.jpg',
+        '%PUBLIC_URL%/logo.png'
+      ];
+      
+      criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+      });
+    </script>
   </body>
 </html>

@@ -30,6 +30,7 @@ import {
   Target,
   Sparkles,
 } from "lucide-react";
+import Header from "../components/Layout/Header";
 
 const MakeMyEventVendor = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -399,110 +400,7 @@ const MakeMyEventVendor = () => {
         }
       `}</style>
 
-      {/* Enhanced Navigation */}
-      <nav className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-purple-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-18">
-            <div className="flex items-center">
-              <div className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent animate-gradient">
-                Make My Event
-              </div>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-              <a
-                href="#features"
-                className="text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 font-medium"
-              >
-                Features
-              </a>
-              <a
-                href="#vendors"
-                className="text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 font-medium"
-              >
-                For Vendors
-              </a>
-              <a
-                href="#how-it-works"
-                className="text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 font-medium"
-              >
-                How It Works
-              </a>
-              <a
-                href="#testimonials"
-                className="text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 font-medium"
-              >
-                Success Stories
-              </a>
-              <a
-                href="#pricing"
-                className="text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 font-medium"
-              >
-                Pricing
-              </a>
-              <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 animate-pulse-glow font-semibold text-sm lg:text-base">
-                Join Now
-              </button>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-purple-600 transition-colors p-2"
-              >
-                {isMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden pb-6 pt-2">
-              <div className="flex flex-col space-y-4">
-                <a
-                  href="#features"
-                  className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all"
-                >
-                  Features
-                </a>
-                <a
-                  href="#vendors"
-                  className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all"
-                >
-                  For Vendors
-                </a>
-                <a
-                  href="#how-it-works"
-                  className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all"
-                >
-                  How It Works
-                </a>
-                <a
-                  href="#testimonials"
-                  className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all"
-                >
-                  Success Stories
-                </a>
-                <a
-                  href="#pricing"
-                  className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all"
-                >
-                  Pricing
-                </a>
-                <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full mx-4 mt-2 font-semibold animate-pulse-glow">
-                  Join Now
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-purple-50 via-pink-50 via-blue-50 to-cyan-50 overflow-hidden">
