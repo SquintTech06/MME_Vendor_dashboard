@@ -13,6 +13,7 @@ import {
   Building2,
 } from "lucide-react";
 import Header from "../components/Layout/Header";
+import { API_BASE_URL } from "../utils/urls";
 
 const VendorRegistration = () => {
   const [step, setStep] = useState(1);
@@ -30,9 +31,7 @@ const VendorRegistration = () => {
   const [errors, setErrors] = useState({});
   const [vendorData, setVendorData] = useState(null);
 
-  // API Base URL - Update this to match your backend URL
-  const API_BASE_URL = "http://localhost:8080";
-
+ 
   const vendorTypes = [
     {
       value: "venue",
