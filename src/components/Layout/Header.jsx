@@ -1,64 +1,95 @@
-
-import React, { useState, useEffect, use } from 'react';
-import { Menu, X, ChevronDown, Heart, User, LogOut, Settings, Calendar, MapPin, Phone, Star } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Heart,
+  User,
+  LogOut,
+  Settings,
+  Calendar,
+  MapPin,
+  Phone,
+  Star,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const navigate = useNavigate();
-  
+
   // Mock user state - replace with your auth logic
   const [user, setUser] = useState(null); // null = not logged in
   // const [user, setUser] = useState({ name: 'John Doe', type: 'customer' }); // logged in customer
   // const [user, setUser] = useState({ name: 'Royal Banquet', type: 'vendor' }); // logged in vendor
 
-  // Handle scroll effect
+  // Handle scroll effect with hide/show functionality
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+
+      // Update scrolled state for styling
+      setIsScrolled(currentScrollY > 20);
+
+      // Header hide/show logic
+      if (currentScrollY < 100) {
+        // Always show header at top of page
+        setIsHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide header
+        setIsHeaderVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show header
+        setIsHeaderVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMenuOpen && !event.target.closest('.mobile-menu')) {
+      if (isMenuOpen && !event.target.closest(".mobile-menu")) {
         setIsMenuOpen(false);
       }
-      if (isUserMenuOpen && !event.target.closest('.user-menu')) {
+      if (isUserMenuOpen && !event.target.closest(".user-menu")) {
         setIsUserMenuOpen(false);
       }
     };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [isMenuOpen, isUserMenuOpen]);
 
   const navigationItems = [
-    { label: 'Features', href: '/#features' },
-    { label: 'For Vendors', href: '/#vendors' },
-    { label: 'How It Works', href: '/#how-it-works' },
+    { label: "Features", href: "/#features" },
+    { label: "For Vendors", href: "/#vendors" },
+    { label: "How It Works", href: "/#how-it-works" },
     // { label: 'Success Stories', href: '#testimonials' },
     // { label: 'Pricing', href: '#pricing' }
   ];
 
   const handleLogin = () => {
     // Navigate to login page
-    console.log('Navigate to login');
+    console.log("Navigate to login");
   };
 
   const handleVendorSignup = () => {
-    navigate('/vendor-registration');
+    navigate("/vendor-registration");
   };
 
   const handleLogout = () => {
     setUser(null);
     setIsUserMenuOpen(false);
     // Clear auth token and redirect
-    console.log('Logout user');
+    console.log("Logout user");
   };
 
   return (
@@ -82,14 +113,19 @@ const Header = () => {
       </div> */}
 
       {/* Main Header */}
-      <nav className={`bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-purple-100 transition-all duration-300 ${
-        isScrolled ? 'shadow-xl' : ''
-      }`}>
+      <nav
+        className={`b mx-auto max-w-[1100px] px-3 sm:px-4 bg-white/95 backdrop-blur-md shadow-lg sticky top-3 z-50 border border-purple-100 transition-all duration-500 ease-in-out rounded-full ${
+          isScrolled ? "shadow-xl" : ""
+        } ${
+          isHeaderVisible
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-full opacity-0"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-18">
-            
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center" onClick={() => navigate("/")}>
               <div className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
                 Make My Event
               </div>
@@ -106,10 +142,10 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
-              
+
               {!user ? (
-                <button 
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-sm lg:text-base font-['Manrope']" 
+                <button
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-sm lg:text-base font-['Manrope']"
                   onClick={handleVendorSignup}
                 >
                   Join Now
@@ -124,8 +160,12 @@ const Header = () => {
                       <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
-                      <p className="font-['Manrope'] font-medium text-gray-900 text-sm">{user.name}</p>
-                      <p className="font-['Inter'] text-xs text-purple-600 capitalize">{user.type}</p>
+                      <p className="font-['Manrope'] font-medium text-gray-900 text-sm">
+                        {user.name}
+                      </p>
+                      <p className="font-['Inter'] text-xs text-purple-600 capitalize">
+                        {user.type}
+                      </p>
                     </div>
                     <ChevronDown className="w-4 h-4 text-gray-400" />
                   </button>
@@ -134,22 +174,34 @@ const Header = () => {
                   {isUserMenuOpen && (
                     <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-purple-100">
                       <div className="py-2">
-                        <a href="/dashboard" className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+                        <a
+                          href="/dashboard"
+                          className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
+                        >
                           <Settings className="w-4 h-4" />
                           <span>Dashboard</span>
                         </a>
-                        <a href="/profile" className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+                        <a
+                          href="/profile"
+                          className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
+                        >
                           <User className="w-4 h-4" />
                           <span>My Profile</span>
                         </a>
-                        {user.type === 'customer' && (
-                          <a href="/bookings" className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+                        {user.type === "customer" && (
+                          <a
+                            href="/bookings"
+                            className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
+                          >
                             <Calendar className="w-4 h-4" />
                             <span>My Bookings</span>
                           </a>
                         )}
-                        {user.type === 'vendor' && (
-                          <a href="/vendor/orders" className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200">
+                        {user.type === "vendor" && (
+                          <a
+                            href="/vendor/orders"
+                            className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
+                          >
                             <Star className="w-4 h-4" />
                             <span>My Orders</span>
                           </a>
@@ -198,7 +250,7 @@ const Header = () => {
                     {item.label}
                   </a>
                 ))}
-                
+
                 {!user ? (
                   <>
                     <button
@@ -210,7 +262,7 @@ const Header = () => {
                     >
                       Sign In
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         handleVendorSignup();
                         setIsMenuOpen(false);
@@ -227,17 +279,27 @@ const Header = () => {
                         <User className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <p className="font-['Manrope'] font-medium text-gray-900">{user.name}</p>
-                        <p className="font-['Inter'] text-sm text-purple-600 capitalize">{user.type}</p>
+                        <p className="font-['Manrope'] font-medium text-gray-900">
+                          {user.name}
+                        </p>
+                        <p className="font-['Inter'] text-sm text-purple-600 capitalize">
+                          {user.type}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-1">
-                      <a href="/dashboard" className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                      <a
+                        href="/dashboard"
+                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
+                      >
                         <Settings className="w-4 h-4" />
                         <span>Dashboard</span>
                       </a>
-                      <a href="/profile" className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                      <a
+                        href="/profile"
+                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
+                      >
                         <User className="w-4 h-4" />
                         <span>My Profile</span>
                       </a>
@@ -262,4 +324,5 @@ const Header = () => {
     </>
   );
 };
+
 export default Header;
