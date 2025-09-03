@@ -432,7 +432,7 @@ const MakeMyEventVendor = () => {
                 </h1>
 
                 <p className="text-lg sm:text-xl lg:text-xl text-gray-600 mb-8 sm:mb-10 leading-relaxed">
-                  Join 25,000+ successful vendors who've boosted their revenue
+                  Join successful vendors who've boosted their revenue
                   by <span className="text-green-600 font-bold">300%+</span>{" "}
                   with our AI-powered marketplace platform.
                 </p>
@@ -454,7 +454,7 @@ const MakeMyEventVendor = () => {
                 </div>
 
                 {/* Mini stats */}
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                {/* <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   <div className="text-center">
                     <div className="text-lg sm:text-xl font-bold text-purple-600 leading-none">
                       25K+
@@ -481,11 +481,11 @@ const MakeMyEventVendor = () => {
                       Average Rating
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="relative mt-12 lg:mt-0">
-                {/* Floating revenue card */}
+              
                 <div className="relative max-w-sm mx-auto lg:max-w-none">
                   <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 transform rotate-1 hover:rotate-0 transition-transform duration-500 animate-float">
                     <div className="text-center">
@@ -504,7 +504,7 @@ const MakeMyEventVendor = () => {
                     </div>
                   </div>
 
-                  {/* Floating notification cards */}
+                 
                   <div className="absolute -top-4 sm:-top-10 -right-2 sm:-right-6 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float-delayed text-xs sm:text-sm">
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
@@ -540,7 +540,7 @@ const MakeMyEventVendor = () => {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Why 25,000+ Vendors Choose
+                Why Vendors Choose
                 <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                   {" "}
                   Us
@@ -653,14 +653,10 @@ const MakeMyEventVendor = () => {
                         <div className="text-xs text-gray-500 mb-1">
                           Monthly Earnings
                         </div>
-                        <div className="text-base sm:text-lg lg:text-xl font-bold text-gray-900">
-                          {vendor.earning}
+                        <div className={`text-base sm:text-lg lg:text-xl font-bold text-gray-900 bg-gradient-to-r ${vendor.color} bg-clip-text text-transparent`}>
+                        {vendor.growth} avg growth
                         </div>
-                        <div
-                          className={`text-xs font-semibold bg-gradient-to-r ${vendor.color} bg-clip-text text-transparent`}
-                        >
-                          {vendor.growth} avg growth
-                        </div>
+                      
                       </div>
                     </div>
 
@@ -824,8 +820,7 @@ const MakeMyEventVendor = () => {
               Ready to Transform Your Business?
             </h2>
             <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-7 opacity-90 leading-relaxed">
-              Join 25,000+ successful vendors and start your journey to 300%+
-              revenue growth today.
+            Join successful vendors and start your journey toward 300%+ revenue growth today.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-7">

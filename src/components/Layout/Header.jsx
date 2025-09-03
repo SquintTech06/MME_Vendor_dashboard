@@ -54,24 +54,12 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isMenuOpen && !event.target.closest(".mobile-menu")) {
-        setIsMenuOpen(false);
-      }
-      if (isUserMenuOpen && !event.target.closest(".user-menu")) {
-        setIsUserMenuOpen(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [isMenuOpen, isUserMenuOpen]);
-
   const navigationItems = [
     { label: "Features", href: "/#features" },
     { label: "For Vendors", href: "/#vendors" },
     { label: "How It Works", href: "/#how-it-works" },
+    { label: "Sign In", href: "/vendor-signin" },
+
     // { label: 'Success Stories', href: '#testimonials' },
     // { label: 'Pricing', href: '#pricing' }
   ];
@@ -114,13 +102,15 @@ const Header = () => {
 
       {/* Main Header */}
       <nav
-        className={`b mx-auto max-w-[1100px] px-3 sm:px-4 bg-white/95 backdrop-blur-md shadow-lg sticky top-3 z-50 border border-purple-100 transition-all duration-500 ease-in-out rounded-full ${
-          isScrolled ? "shadow-xl" : ""
-        } ${
-          isHeaderVisible
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0"
-        }`}
+        className={`mx-auto max-w-[1100px] px-3 sm:px-4 bg-white/95 backdrop-blur-md shadow-lg sticky top-3 z-50 border border-purple-100 
+    ${isScrolled ? "shadow-xl" : ""} 
+    ${
+      isHeaderVisible
+        ? "translate-y-0 opacity-100"
+        : "-translate-y-full opacity-0"
+    } 
+    ${isMenuOpen ? "rounded-2xl" : "rounded-full"}
+  `}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-18">
@@ -142,7 +132,7 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
-
+            
               {!user ? (
                 <button
                   className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-sm lg:text-base font-['Manrope']"
@@ -224,7 +214,10 @@ const Header = () => {
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={() => {
+                  console.log("Menu toggled");
+                  setIsMenuOpen(!isMenuOpen);
+                }}
                 className="text-gray-700 hover:text-purple-600 transition-colors p-2"
               >
                 {isMenuOpen ? (
@@ -237,6 +230,7 @@ const Header = () => {
           </div>
 
           {/* Mobile Navigation */}
+
           {isMenuOpen && (
             <div className="md:hidden pb-6 pt-2 mobile-menu">
               <div className="flex flex-col space-y-4">
@@ -253,15 +247,7 @@ const Header = () => {
 
                 {!user ? (
                   <>
-                    <button
-                      onClick={() => {
-                        handleLogin();
-                        setIsMenuOpen(false);
-                      }}
-                      className="text-gray-700 hover:text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-50 transition-all mx-4 border border-gray-300 text-center font-['Inter'] font-medium"
-                    >
-                      Sign In
-                    </button>
+               
                     <button
                       onClick={() => {
                         handleVendorSignup();
