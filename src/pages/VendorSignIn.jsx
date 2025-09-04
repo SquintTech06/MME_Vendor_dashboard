@@ -115,10 +115,10 @@ const VendorSignIn = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 font-['Inter']">
       <Header />
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto mt-10">
         <div className="max-w-md mx-auto">
           {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
             <div className="space-y-6">
               {/* Header */}
               <div className="text-center mb-8">
