@@ -204,57 +204,18 @@ const Header = () => {
                     Join Now
                   </button>
                 ) : (
-                  <div className="px-4 space-y-3 border-t border-gray-100 pt-4">
-                    <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
-                      <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-['Manrope'] font-medium text-gray-900">
-                          {user?.name || user?.businessName || "User"}
-                        </p>
-                        <p className="font-['Inter'] text-sm text-purple-600 capitalize">
-                          {user?.role || "Vendor"}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <button
+                  <div className="space-y-3 border-t border-gray-100 pt-4">
+                         <button
                         onClick={() => {
                           handleDashboard();
                           setIsMenuOpen(false);
                         }}
-                        className="w-full flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
+                        className="w-full flex items-center space-x-3 px-3 py-4 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
                       >
                         <LayoutDashboard className="w-4 h-4" />
-                        <span>Dashboard</span>
+                        <span className="font-['Manrope'] font-semibold">Dashboard</span>
                       </button>
-                      <a
-                        href="/profile"
-                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
-                      >
-                        <User className="w-4 h-4" />
-                        <span>My Profile</span>
-                      </a>
-                      <a
-                        href="/orders"
-                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
-                      >
-                        <Star className="w-4 h-4" />
-                        <span>My Orders</span>
-                      </a>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          setIsMenuOpen(false);
-                        }}
-                        className="w-full flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-red-600 hover:bg-red-50 rounded-lg"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
+
                   </div>
                 )}
               </div>
