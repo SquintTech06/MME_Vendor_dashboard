@@ -78,7 +78,6 @@
 
 // export default Dashboard;
 
-
 import React, { useState, useEffect } from "react";
 import { useAppSelector, useAuth } from "../../store/hooks/useRedux";
 
@@ -125,7 +124,7 @@ import {
   Smartphone,
   Heart,
   Share2,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 const VendorDashboard = () => {
@@ -133,12 +132,11 @@ const VendorDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
   const { logout } = useAuth();
 
-  const { user,lastLoginTime } = useAppSelector((state) => state.auth);
+  const { user, lastLoginTime } = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
     logout();
   };
-
 
   // Mock dashboard data
   const dashboardStats = [
@@ -148,7 +146,7 @@ const VendorDashboard = () => {
       change: "+32%",
       positive: true,
       icon: <DollarSign className="w-5 h-5" />,
-      color: "from-green-500 to-emerald-500"
+      color: "from-green-500 to-emerald-500",
     },
     {
       title: "Total Bookings",
@@ -156,7 +154,7 @@ const VendorDashboard = () => {
       change: "+18%",
       positive: true,
       icon: <Calendar className="w-5 h-5" />,
-      color: "from-blue-500 to-cyan-500"
+      color: "from-blue-500 to-cyan-500",
     },
     {
       title: "New Customers",
@@ -164,7 +162,7 @@ const VendorDashboard = () => {
       change: "+25%",
       positive: true,
       icon: <Users className="w-5 h-5" />,
-      color: "from-purple-500 to-pink-500"
+      color: "from-purple-500 to-pink-500",
     },
     {
       title: "Average Rating",
@@ -172,8 +170,8 @@ const VendorDashboard = () => {
       change: "+0.2",
       positive: true,
       icon: <Star className="w-5 h-5" />,
-      color: "from-orange-500 to-red-500"
-    }
+      color: "from-orange-500 to-red-500",
+    },
   ];
 
   const recentBookings = [
@@ -183,7 +181,7 @@ const VendorDashboard = () => {
       date: "2025-01-15",
       amount: 150000,
       status: "confirmed",
-      type: "Wedding"
+      type: "Wedding",
     },
     {
       id: "BK002",
@@ -191,7 +189,7 @@ const VendorDashboard = () => {
       date: "2025-01-20",
       amount: 85000,
       status: "pending",
-      type: "Corporate"
+      type: "Corporate",
     },
     {
       id: "BK003",
@@ -199,8 +197,8 @@ const VendorDashboard = () => {
       date: "2025-01-18",
       amount: 35000,
       status: "completed",
-      type: "Birthday"
-    }
+      type: "Birthday",
+    },
   ];
 
   const notifications = [
@@ -209,43 +207,76 @@ const VendorDashboard = () => {
       type: "booking",
       message: "New booking request from Sharma Family",
       time: "2 hours ago",
-      unread: true
+      unread: true,
     },
     {
       id: 2,
       type: "payment",
       message: "Payment of ₹1,50,000 received",
       time: "5 hours ago",
-      unread: true
+      unread: true,
     },
     {
       id: 3,
       type: "review",
       message: "New 5-star review received",
       time: "1 day ago",
-      unread: false
-    }
+      unread: false,
+    },
   ];
 
   const sidebarItems = [
     { id: "profile", label: "Profile", icon: <Settings className="w-5 h-5" /> },
-    { id: "dashboard", label: "Dashboard", icon: <BarChart3 className="w-5 h-5" /> },
-    { id: "bookings", label: "Bookings", icon: <Calendar className="w-5 h-5" /> },
-    { id: "listings", label: "My Listings", icon: <Package className="w-5 h-5" /> },
-    { id: "customers", label: "Customers", icon: <Users className="w-5 h-5" /> },
-    { id: "revenue", label: "Revenue", icon: <DollarSign className="w-5 h-5" /> },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: <BarChart3 className="w-5 h-5" />,
+    },
+    {
+      id: "bookings",
+      label: "Bookings",
+      icon: <Calendar className="w-5 h-5" />,
+    },
+    {
+      id: "listings",
+      label: "My Listings",
+      icon: <Package className="w-5 h-5" />,
+    },
+    {
+      id: "customers",
+      label: "Customers",
+      icon: <Users className="w-5 h-5" />,
+    },
+    {
+      id: "revenue",
+      label: "Revenue",
+      icon: <DollarSign className="w-5 h-5" />,
+    },
     { id: "reviews", label: "Reviews", icon: <Star className="w-5 h-5" /> },
-    { id: "messages", label: "Messages", icon: <MessageSquare className="w-5 h-5" /> },
-    { id: "analytics", label: "Analytics", icon: <TrendingUp className="w-5 h-5" /> },
+    {
+      id: "messages",
+      label: "Messages",
+      icon: <MessageSquare className="w-5 h-5" />,
+    },
+    {
+      id: "analytics",
+      label: "Analytics",
+      icon: <TrendingUp className="w-5 h-5" />,
+    },
   ];
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "confirmed": return "bg-green-100 text-green-800";
-      case "pending": return "bg-yellow-100 text-yellow-800";
-      case "completed": return "bg-blue-100 text-blue-800";
-      case "cancelled": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "confirmed":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "completed":
+        return "bg-blue-100 text-blue-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -281,17 +312,32 @@ const VendorDashboard = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {dashboardStats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
+          <div
+            key={index}
+            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+          >
             <div className="flex items-start justify-between mb-4">
-              <div className={`bg-gradient-to-r ${stat.color} text-white p-3 rounded-xl`}>
+              <div
+                className={`bg-gradient-to-r ${stat.color} text-white p-3 rounded-xl`}
+              >
                 {stat.icon}
               </div>
-              <div className={`flex items-center text-sm font-semibold ${stat.positive ? 'text-green-600' : 'text-red-600'}`}>
-                {stat.positive ? <ArrowUp className="w-4 h-4 mr-1" /> : <ArrowDown className="w-4 h-4 mr-1" />}
+              <div
+                className={`flex items-center text-sm font-semibold ${
+                  stat.positive ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {stat.positive ? (
+                  <ArrowUp className="w-4 h-4 mr-1" />
+                ) : (
+                  <ArrowDown className="w-4 h-4 mr-1" />
+                )}
                 {stat.change}
               </div>
             </div>
-            <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
+            <div className="text-2xl font-bold text-gray-900 mb-1">
+              {stat.value}
+            </div>
             <div className="text-gray-600 text-sm">{stat.title}</div>
           </div>
         ))}
@@ -303,8 +349,8 @@ const VendorDashboard = () => {
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900">Recent Bookings</h2>
-            <button 
-              onClick={() => setCurrentView('bookings')}
+            <button
+              onClick={() => setCurrentView("bookings")}
               className="text-purple-600 hover:text-purple-800 font-semibold text-sm"
             >
               View All
@@ -312,14 +358,27 @@ const VendorDashboard = () => {
           </div>
           <div className="space-y-4">
             {recentBookings.map((booking) => (
-              <div key={booking.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+              <div
+                key={booking.id}
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+              >
                 <div className="flex-1">
-                  <div className="font-semibold text-gray-900">{booking.customer}</div>
-                  <div className="text-sm text-gray-600">{booking.date} • {booking.type}</div>
+                  <div className="font-semibold text-gray-900">
+                    {booking.customer}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {booking.date} • {booking.type}
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-gray-900">₹{booking.amount.toLocaleString()}</div>
-                  <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
+                  <div className="font-bold text-gray-900">
+                    ₹{booking.amount.toLocaleString()}
+                  </div>
+                  <div
+                    className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                      booking.status
+                    )}`}
+                  >
                     {booking.status}
                   </div>
                 </div>
@@ -334,23 +393,44 @@ const VendorDashboard = () => {
             <h2 className="text-xl font-bold text-gray-900">Notifications</h2>
             <div className="flex items-center space-x-2">
               <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                {notifications.filter(n => n.unread).length}
+                {notifications.filter((n) => n.unread).length}
               </span>
             </div>
           </div>
           <div className="space-y-4">
             {notifications.map((notification) => (
-              <div key={notification.id} className={`flex items-start space-x-3 p-3 rounded-xl transition-colors ${notification.unread ? 'bg-blue-50' : 'bg-gray-50'}`}>
-                <div className={`p-2 rounded-full ${notification.unread ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}>
-                  {notification.type === 'booking' && <Calendar className="w-4 h-4" />}
-                  {notification.type === 'payment' && <DollarSign className="w-4 h-4" />}
-                  {notification.type === 'review' && <Star className="w-4 h-4" />}
+              <div
+                key={notification.id}
+                className={`flex items-start space-x-3 p-3 rounded-xl transition-colors ${
+                  notification.unread ? "bg-blue-50" : "bg-gray-50"
+                }`}
+              >
+                <div
+                  className={`p-2 rounded-full ${
+                    notification.unread
+                      ? "bg-blue-100 text-blue-600"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {notification.type === "booking" && (
+                    <Calendar className="w-4 h-4" />
+                  )}
+                  {notification.type === "payment" && (
+                    <DollarSign className="w-4 h-4" />
+                  )}
+                  {notification.type === "review" && (
+                    <Star className="w-4 h-4" />
+                  )}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{notification.message}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {notification.message}
+                  </p>
                   <p className="text-xs text-gray-600">{notification.time}</p>
                 </div>
-                {notification.unread && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
+                {notification.unread && (
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                )}
               </div>
             ))}
           </div>
@@ -361,30 +441,36 @@ const VendorDashboard = () => {
       <div className="bg-white rounded-2xl p-6 shadow-sm">
         <h2 className="text-xl font-bold text-gray-900 mb-6">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button 
-            onClick={() => setCurrentView('listings')}
+          <button
+            onClick={() => setCurrentView("listings")}
             className="flex flex-col items-center p-4 bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors group"
           >
             <Plus className="w-8 h-8 text-purple-600 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-medium text-purple-600">Add Listing</span>
+            <span className="text-sm font-medium text-purple-600">
+              Add Listing
+            </span>
           </button>
           <button className="flex flex-col items-center p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group">
             <Upload className="w-8 h-8 text-green-600 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-medium text-green-600">Upload Photos</span>
+            <span className="text-sm font-medium text-green-600">
+              Upload Photos
+            </span>
           </button>
-          <button 
-            onClick={() => setCurrentView('messages')}
+          <button
+            onClick={() => setCurrentView("messages")}
             className="flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors group"
           >
             <MessageSquare className="w-8 h-8 text-blue-600 mb-2 group-hover:scale-110 transition-transform" />
             <span className="text-sm font-medium text-blue-600">Messages</span>
           </button>
-          <button 
-            onClick={() => setCurrentView('analytics')}
+          <button
+            onClick={() => setCurrentView("analytics")}
             className="flex flex-col items-center p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors group"
           >
             <BarChart3 className="w-8 h-8 text-orange-600 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-medium text-orange-600">View Reports</span>
+            <span className="text-sm font-medium text-orange-600">
+              View Reports
+            </span>
           </button>
         </div>
       </div>
@@ -394,7 +480,9 @@ const VendorDashboard = () => {
   const renderBookingsView = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Bookings Management</h1>
+        <h1 className="text-2xl font-bold text-gray-900">
+          Bookings Management
+        </h1>
         <div className="flex items-center space-x-3">
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -420,25 +508,53 @@ const VendorDashboard = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Date</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Booking ID
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Customer
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Event Date
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Type
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {recentBookings.map((booking) => (
                 <tr key={booking.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{booking.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.customer}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.type}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹{booking.amount.toLocaleString()}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {booking.id}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {booking.customer}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {booking.date}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {booking.type}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    ₹{booking.amount.toLocaleString()}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
+                    <span
+                      className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                        booking.status
+                      )}`}
+                    >
                       {booking.status}
                     </span>
                   </td>
@@ -474,32 +590,48 @@ const VendorDashboard = () => {
         return (
           <div className="text-center py-12">
             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">My Listings</h2>
-            <p className="text-gray-600">Manage your venue and service listings here.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              My Listings
+            </h2>
+            <p className="text-gray-600">
+              Manage your venue and service listings here.
+            </p>
           </div>
         );
       case "customers":
         return (
           <div className="text-center py-12">
             <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Customer Management</h2>
-            <p className="text-gray-600">View and manage your customer relationships.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Customer Management
+            </h2>
+            <p className="text-gray-600">
+              View and manage your customer relationships.
+            </p>
           </div>
         );
       case "revenue":
         return (
           <div className="text-center py-12">
             <DollarSign className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Revenue Analytics</h2>
-            <p className="text-gray-600">Track your earnings and financial performance.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Revenue Analytics
+            </h2>
+            <p className="text-gray-600">
+              Track your earnings and financial performance.
+            </p>
           </div>
         );
       case "reviews":
         return (
           <div className="text-center py-12">
             <Star className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Customer Reviews</h2>
-            <p className="text-gray-600">Manage and respond to customer feedback.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Customer Reviews
+            </h2>
+            <p className="text-gray-600">
+              Manage and respond to customer feedback.
+            </p>
           </div>
         );
       case "messages":
@@ -514,16 +646,24 @@ const VendorDashboard = () => {
         return (
           <div className="text-center py-12">
             <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Business Analytics</h2>
-            <p className="text-gray-600">Detailed insights about your business performance.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Business Analytics
+            </h2>
+            <p className="text-gray-600">
+              Detailed insights about your business performance.
+            </p>
           </div>
         );
       case "profile":
         return (
           <div className="text-center py-12">
             <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Settings</h2>
-            <p className="text-gray-600">Manage your account and business settings.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Profile Settings
+            </h2>
+            <p className="text-gray-600">
+              Manage your account and business settings.
+            </p>
           </div>
         );
       default:
@@ -533,82 +673,88 @@ const VendorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-   
-
       {/* Sidebar */}
-<div
-  className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0`}
->
-  {/* Sidebar header */}
-  <div className="flex items-center justify-between h-16 px-6">
-    <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
-      Make My Event
-    </div>
-    <button
-      onClick={() => setSidebarOpen(false)}
-      className="lg:hidden text-gray-600 hover:text-gray-800"
-    >
-      <X className="w-6 h-6" />
-    </button>
-  </div>
-
-  {/* Make the sidebar a flex column so footer can stick to bottom */}
-  <div className="h-[calc(100vh-4rem)] flex flex-col">
-    {/* User Profile Section */}
-    <div className="px-6 py-4 border-y border-gray-200">
-      <div className="flex items-center space-x-3">
-        <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-        {user.contactDetails.name.split(' ').map(n => n[0]).join('')}
+      <div
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+    ${
+      sidebarOpen ? "translate-x-0" : "-translate-x-full"
+    } lg:translate-x-0 lg:static lg:inset-0`}
+      >
+        {/* Sidebar header */}
+        <div className="flex items-center justify-between h-16 px-6">
+          <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
+            Make My Event
+          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-gray-600 hover:text-gray-800"
+          >
+            <X className="w-6 h-6" />
+          </button>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-900 truncate">{user.business_name}</p>
-          <p className="text-xs text-gray-500 truncate">{user.contactDetails.name}</p>
+
+        {/* Make the sidebar a flex column so footer can stick to bottom */}
+        <div className="h-[calc(100vh-4rem)] flex flex-col">
+          {/* User Profile Section */}
+          <div className="px-6 py-4 border-y border-gray-200">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                {user.contactDetails.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {user.business_name}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {user.contactDetails.name}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation (scrollable) */}
+          <nav className="flex-1 overflow-y-auto px-4 py-4">
+            <ul className="space-y-2">
+              {sidebarItems.map((item) => (
+                <li key={item.id}>
+                  <button
+                    onClick={() => {
+                      setCurrentView(item.id);
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                      currentView === item.id
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {item.icon}
+                    <span className="ml-3">{item.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Logout Button pinned to bottom via mt-auto or at end of flex column */}
+          <div className="px-4 pb-4">
+            <button
+              className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              onClick={handleLogout}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Logout
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-
-    {/* Navigation (scrollable) */}
-    <nav className="flex-1 overflow-y-auto px-4 py-4">
-      <ul className="space-y-2">
-        {sidebarItems.map((item) => (
-          <li key={item.id}>
-            <button
-              onClick={() => {
-                setCurrentView(item.id);
-                setSidebarOpen(false);
-              }}
-              className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                currentView === item.id
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              {item.icon}
-              <span className="ml-3">{item.label}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
-
-    {/* Logout Button pinned to bottom via mt-auto or at end of flex column */}
-    <div className="px-4 pb-4">
-      <button
-        className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-        onClick={handleLogout}
-      >
-        <ExternalLink className="w-4 h-4 mr-2" />
-        Logout
-      </button>
-    </div>
-  </div>
-</div>
-
 
       {/* Sidebar Overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -626,19 +772,15 @@ const VendorDashboard = () => {
               >
                 <Menu className="w-6 h-6" />
               </button>
-              <h1 className="text-xl font-semibold text-gray-900 capitalize">
+              <h1 className="text-xl font-bold text-gray-600 tracking-tight font-['Manrope']">
                 {currentView === "dashboard" ? "Dashboard" : currentView}
               </h1>
             </div>
-
-          
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-6">
-          {renderCurrentView()}
-        </main>
+        <main className="flex-1 p-6">{renderCurrentView()}</main>
       </div>
     </div>
   );
