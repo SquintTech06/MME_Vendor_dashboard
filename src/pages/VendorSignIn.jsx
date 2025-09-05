@@ -10,8 +10,12 @@ import {
 } from "lucide-react";
 import Header from "../components/Layout/Header";
 import { API_BASE_URL } from "../utils/urls";
+import { useAuth } from "../store/hooks/useRedux";
+import { useNavigate } from "react-router-dom";
 
 const VendorSignIn = () => {
+  const navigate = useNavigate();
+  const { login, getUserInfo } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,7 +23,7 @@ const VendorSignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [rememberMe, setRememberMe] = useState(false);
+ 
 
   const validateForm = () => {
     const newErrors = {};
@@ -40,48 +44,16 @@ const VendorSignIn = () => {
 
   const handleSignIn = async () => {
     if (!validateForm()) return;
-
     setLoading(true);
     setErrors({});
-
     try {
-      const response = await fetch(`${API_BASE_URL}/vendors/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Handle successful login
-        console.log("Login successful:", data);
-        alert("Login successful!");
-        
-        // Store authentication data (in a real app, use proper state management)
-        // Note: Not using localStorage as per artifact restrictions
-        
-        // You can implement navigation logic here
-        console.log("Redirecting to dashboard...");
-        // Example: navigate('/vendor/dashboard');
-      } else {
-        // Handle login failure
-        const errorMessage = data.message || "Invalid credentials. Please try again.";
-        setErrors({ submit: errorMessage });
-      }
-    } catch (error) {
-      console.error("Sign in error:", error);
-      
-      if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        setErrors({ submit: "Network error. Please check your connection and ensure the server is running." });
-      } else {
-        setErrors({ submit: "Sign in failed. Please try again." });
-      }
+      await login({ email: formData.email, password: formData.password });
+     
+      await getUserInfo().catch(() => {});
+      navigate('/dashboard', { replace: true });
+    } catch (err) {
+      const message = err?.message || 'Invalid credentials. Please try again.';
+      setErrors({ submit: message });
     } finally {
       setLoading(false);
     }
