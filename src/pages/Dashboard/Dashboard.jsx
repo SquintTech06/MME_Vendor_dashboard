@@ -228,6 +228,7 @@ const VendorDashboard = () => {
   ];
 
   const sidebarItems = [
+    { id: "profile", label: "Profile", icon: <Settings className="w-5 h-5" /> },
     { id: "dashboard", label: "Dashboard", icon: <BarChart3 className="w-5 h-5" /> },
     { id: "bookings", label: "Bookings", icon: <Calendar className="w-5 h-5" /> },
     { id: "listings", label: "My Listings", icon: <Package className="w-5 h-5" /> },
@@ -236,7 +237,6 @@ const VendorDashboard = () => {
     { id: "reviews", label: "Reviews", icon: <Star className="w-5 h-5" /> },
     { id: "messages", label: "Messages", icon: <MessageSquare className="w-5 h-5" /> },
     { id: "analytics", label: "Analytics", icon: <TrendingUp className="w-5 h-5" /> },
-    { id: "profile", label: "Profile", icon: <Settings className="w-5 h-5" /> }
   ];
 
   const getStatusColor = (status) => {
@@ -533,65 +533,78 @@ const VendorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
+   
+
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0`}>
-        <div className="flex items-center justify-between h-16 px-6 ">
-        <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
-                Make My Event
-              </div>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-white hover:text-gray-200"
-          >
-            <X className="w-6 h-6" />
-          </button>
+<div
+  className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0`}
+>
+  {/* Sidebar header */}
+  <div className="flex items-center justify-between h-16 px-6">
+    <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
+      Make My Event
+    </div>
+    <button
+      onClick={() => setSidebarOpen(false)}
+      className="lg:hidden text-gray-600 hover:text-gray-800"
+    >
+      <X className="w-6 h-6" />
+    </button>
+  </div>
+
+  {/* Make the sidebar a flex column so footer can stick to bottom */}
+  <div className="h-[calc(100vh-4rem)] flex flex-col">
+    {/* User Profile Section */}
+    <div className="px-6 py-4 border-y border-gray-200">
+      <div className="flex items-center space-x-3">
+        <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+        {user.contactDetails.name.split(' ').map(n => n[0]).join('')}
         </div>
-
-        {/* User Profile Section */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-              {user.contactDetails.name.split(' ').map(n => n[0]).join('')}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{user.business_name}</p>
-              <p className="text-xs text-gray-500 truncate">{user.contactDetails.name}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <nav className="mt-8 px-4">
-          <ul className="space-y-2">
-            {sidebarItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => {
-                    setCurrentView(item.id);
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                    currentView === item.id
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {item.icon}
-                  <span className="ml-3">{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Logout Button */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <button className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors" onClick={handleLogout}>
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Logout
-          </button>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-gray-900 truncate">{user.business_name}</p>
+          <p className="text-xs text-gray-500 truncate">{user.contactDetails.name}</p>
         </div>
       </div>
+    </div>
+
+    {/* Navigation (scrollable) */}
+    <nav className="flex-1 overflow-y-auto px-4 py-4">
+      <ul className="space-y-2">
+        {sidebarItems.map((item) => (
+          <li key={item.id}>
+            <button
+              onClick={() => {
+                setCurrentView(item.id);
+                setSidebarOpen(false);
+              }}
+              className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                currentView === item.id
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              {item.icon}
+              <span className="ml-3">{item.label}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    {/* Logout Button pinned to bottom via mt-auto or at end of flex column */}
+    <div className="px-4 pb-4">
+      <button
+        className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+        onClick={handleLogout}
+      >
+        <ExternalLink className="w-4 h-4 mr-2" />
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
 
       {/* Sidebar Overlay */}
       {sidebarOpen && (
