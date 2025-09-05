@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, getProfile, selectAuth, logout, selectUser } from "../slices/authSlice";
+import {
+  loginUser,
+  getProfile,
+  selectAuth,
+  logout,
+  selectUser,
+} from "../slices/authSlice";
 
 export const useAppDispatch = () => useDispatch();
 export const useAppSelector = (selector) => useSelector(selector);
@@ -15,7 +21,7 @@ export const useAuth = () => {
   return {
     ...auth,
     login,
-    getUserInfo,   
+    getUserInfo,
 
     logout: logoutUser,
   };

@@ -11,8 +11,10 @@ import {
   MapPin,
   Phone,
   Star,
+  LayoutDashboard,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/hooks/useRedux";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,10 +24,8 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const navigate = useNavigate();
 
-  // Mock user state - replace with your auth logic
-  const [user, setUser] = useState(null); // null = not logged in
-  // const [user, setUser] = useState({ name: 'John Doe', type: 'customer' }); // logged in customer
-  // const [user, setUser] = useState({ name: 'Royal Banquet', type: 'vendor' }); // logged in vendor
+  // Get auth state from Redux
+  const { isAuthenticated, user, logout } = useAuth();
 
   // Handle scroll effect with hide/show functionality
   useEffect(() => {
@@ -58,26 +58,30 @@ const Header = () => {
     { label: "Features", href: "/#features" },
     { label: "For Vendors", href: "/#vendors" },
     { label: "How It Works", href: "/#how-it-works" },
-    { label: "Sign In", href: "/vendor-signin" },
-
-    // { label: 'Success Stories', href: '#testimonials' },
-    // { label: 'Pricing', href: '#pricing' }
+    ...(isAuthenticated ? [] : [{ label: "Sign In", href: "/vendor-signin" }]),
   ];
 
   const handleLogin = () => {
-    // Navigate to login page
-    console.log("Navigate to login");
+    navigate("/vendor-signin");
   };
 
   const handleVendorSignup = () => {
     navigate("/vendor-registration");
   };
 
-  const handleLogout = () => {
-    setUser(null);
-    setIsUserMenuOpen(false);
-    // Clear auth token and redirect
-    console.log("Logout user");
+  const handleDashboard = () => {
+    navigate("/dashboard");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsUserMenuOpen(false);
+      navigate("/");
+      console.log("User logged out successfully");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -102,7 +106,7 @@ const Header = () => {
 
       {/* Main Header */}
       <nav
-        className={`mx-auto max-w-[1100px] px-3 sm:px-4 bg-white/95 backdrop-blur-md shadow-lg sticky top-3 z-50 border border-purple-100 
+        className={`mx-auto max-w-[1100px] px-3 sm:px-4 bg-white/95 backdrop-blur-md shadow-lg sticky top-3 z-50 border border-purple-100 transition-all duration-300
     ${isScrolled ? "shadow-xl" : ""} 
     ${
       isHeaderVisible
@@ -115,7 +119,10 @@ const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-18">
             {/* Logo */}
-            <div className="flex items-center" onClick={() => navigate("/")}>
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => navigate("/")}
+            >
               <div className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-['Manrope']">
                 Make My Event
               </div>
@@ -132,8 +139,8 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
-            
-              {!user ? (
+
+              {!isAuthenticated ? (
                 <button
                   className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 lg:px-8 py-2 lg:py-3 rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-semibold text-sm lg:text-base font-['Manrope']"
                   onClick={handleVendorSignup}
@@ -141,72 +148,15 @@ const Header = () => {
                   Join Now
                 </button>
               ) : (
-                <div className="relative user-menu">
+                <div className="flex items-center space-x-4">
+                  {/* Dashboard Button */}
                   <button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-50 transition-colors duration-200"
+                    onClick={handleDashboard}
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 lg:px-6 py-2 lg:py-2.5 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 font-medium text-sm lg:text-base font-['Manrope'] flex items-center space-x-2"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <p className="font-['Manrope'] font-medium text-gray-900 text-sm">
-                        {user.name}
-                      </p>
-                      <p className="font-['Inter'] text-xs text-purple-600 capitalize">
-                        {user.type}
-                      </p>
-                    </div>
-                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>Dashboard</span>
                   </button>
-
-                  {/* User Dropdown */}
-                  {isUserMenuOpen && (
-                    <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-purple-100">
-                      <div className="py-2">
-                        <a
-                          href="/dashboard"
-                          className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                        >
-                          <Settings className="w-4 h-4" />
-                          <span>Dashboard</span>
-                        </a>
-                        <a
-                          href="/profile"
-                          className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                        >
-                          <User className="w-4 h-4" />
-                          <span>My Profile</span>
-                        </a>
-                        {user.type === "customer" && (
-                          <a
-                            href="/bookings"
-                            className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                          >
-                            <Calendar className="w-4 h-4" />
-                            <span>My Bookings</span>
-                          </a>
-                        )}
-                        {user.type === "vendor" && (
-                          <a
-                            href="/vendor/orders"
-                            className="flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200"
-                          >
-                            <Star className="w-4 h-4" />
-                            <span>My Orders</span>
-                          </a>
-                        )}
-                        <hr className="my-2 border-gray-100" />
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center space-x-3 px-4 py-3 font-['Inter'] text-sm text-red-600 hover:bg-red-50"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          <span>Sign Out</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -215,7 +165,6 @@ const Header = () => {
             <div className="md:hidden">
               <button
                 onClick={() => {
-                  console.log("Menu toggled");
                   setIsMenuOpen(!isMenuOpen);
                 }}
                 className="text-gray-700 hover:text-purple-600 transition-colors p-2"
@@ -230,7 +179,6 @@ const Header = () => {
           </div>
 
           {/* Mobile Navigation */}
-
           {isMenuOpen && (
             <div className="md:hidden pb-6 pt-2 mobile-menu">
               <div className="flex flex-col space-y-4">
@@ -245,19 +193,16 @@ const Header = () => {
                   </a>
                 ))}
 
-                {!user ? (
-                  <>
-               
-                    <button
-                      onClick={() => {
-                        handleVendorSignup();
-                        setIsMenuOpen(false);
-                      }}
-                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full mx-4 mt-2 font-semibold font-['Manrope']"
-                    >
-                      Join Now
-                    </button>
-                  </>
+                {!isAuthenticated ? (
+                  <button
+                    onClick={() => {
+                      handleVendorSignup();
+                      setIsMenuOpen(false);
+                    }}
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full mx-4 mt-2 font-semibold font-['Manrope']"
+                  >
+                    Join Now
+                  </button>
                 ) : (
                   <div className="px-4 space-y-3 border-t border-gray-100 pt-4">
                     <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
@@ -266,28 +211,38 @@ const Header = () => {
                       </div>
                       <div>
                         <p className="font-['Manrope'] font-medium text-gray-900">
-                          {user.name}
+                          {user?.name || user?.businessName || "User"}
                         </p>
                         <p className="font-['Inter'] text-sm text-purple-600 capitalize">
-                          {user.type}
+                          {user?.role || "Vendor"}
                         </p>
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <a
-                        href="/dashboard"
-                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
+                      <button
+                        onClick={() => {
+                          handleDashboard();
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
                       >
-                        <Settings className="w-4 h-4" />
+                        <LayoutDashboard className="w-4 h-4" />
                         <span>Dashboard</span>
-                      </a>
+                      </button>
                       <a
                         href="/profile"
                         className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
                       >
                         <User className="w-4 h-4" />
                         <span>My Profile</span>
+                      </a>
+                      <a
+                        href="/orders"
+                        className="flex items-center space-x-3 px-3 py-2 font-['Inter'] text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200"
+                      >
+                        <Star className="w-4 h-4" />
+                        <span>My Orders</span>
                       </a>
                       <button
                         onClick={() => {

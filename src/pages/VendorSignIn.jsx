@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Eye,
   EyeOff,
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const VendorSignIn = () => {
   const navigate = useNavigate();
-  const { login, getUserInfo } = useAuth();
+  const { login, getUserInfo, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,7 +23,11 @@ const VendorSignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
- 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -48,11 +52,11 @@ const VendorSignIn = () => {
     setErrors({});
     try {
       await login({ email: formData.email, password: formData.password });
-     
+
       await getUserInfo().catch(() => {});
-      navigate('/dashboard', { replace: true });
+      navigate("/dashboard", { replace: true });
     } catch (err) {
-      const message = err?.message || 'Invalid credentials. Please try again.';
+      const message = err?.message || "Invalid credentials. Please try again.";
       setErrors({ submit: message });
     } finally {
       setLoading(false);
@@ -67,7 +71,7 @@ const VendorSignIn = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSignIn();
     }
   };
@@ -94,7 +98,6 @@ const VendorSignIn = () => {
             <div className="space-y-6">
               {/* Header */}
               <div className="text-center mb-8">
-              
                 <h1 className="font-['Manrope'] text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
                   Welcome Back
                 </h1>
@@ -139,7 +142,9 @@ const VendorSignIn = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
-                    onChange={(e) => handleInputChange("password", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("password", e.target.value)
+                    }
                     onKeyPress={handleKeyPress}
                     className={`w-full pl-10 pr-12 py-3 border rounded-lg font-['Inter'] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 ${
                       errors.password ? "border-red-300" : "border-gray-300"
@@ -151,7 +156,9 @@ const VendorSignIn = () => {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -167,14 +174,20 @@ const VendorSignIn = () => {
                 )}
               </div>
 
-             
-
               {/* Error Message */}
               {errors.submit && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-red-600 text-sm font-['Inter'] flex items-start">
-                    <svg className="w-4 h-4 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    <svg
+                      className="w-4 h-4 mt-0.5 mr-2 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     {errors.submit}
                   </p>
@@ -200,22 +213,21 @@ const VendorSignIn = () => {
                 )}
               </button>
 
-               {/* Remember Me & Forgot Password */}
-               <div className="flex items-center justify-center space-x-4">
-             
-             <button 
-               type="button"
-               onClick={handleForgotPassword}
-               className="font-['Inter'] text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
-             >
-               Forgot Password?
-             </button>
-           </div>
+              {/* Remember Me & Forgot Password */}
+              <div className="flex items-center justify-center space-x-4">
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="font-['Inter'] text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+                >
+                  Forgot Password?
+                </button>
+              </div>
 
               {/* Sign Up Link */}
               <p className="text-center font-['Inter'] text-sm text-gray-600">
                 Don't have an account?{" "}
-                <button 
+                <button
                   type="button"
                   onClick={handleRegisterNavigation}
                   className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 underline-offset-2 hover:underline"
@@ -240,7 +252,6 @@ const VendorSignIn = () => {
                       Trusted Platform
                     </span>
                   </div>
-                
                 </div>
               </div>
 

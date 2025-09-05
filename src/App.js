@@ -26,7 +26,6 @@ function App() {
     const { accessToken, isAuthenticated } = useSelector(selectAuth);
 
     useEffect(() => {
-   
       if (accessToken && !isAuthenticated) {
         dispatch(getProfile());
       }
